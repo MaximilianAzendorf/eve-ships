@@ -52,7 +52,7 @@ subdirs = [
     "ships/pirate/soct/.+",
     "ships/pirate/soe/.+",
 
-    "ships/special_edition/zephyr",
+    "ships/special_edition/.+",
     ]
 
 blacklist = [
