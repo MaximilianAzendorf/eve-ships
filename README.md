@@ -13,8 +13,9 @@ This script (propably) only works on Linux (or other UNIX systems). If you are o
 You need:
 
 * Python 3
-* Image Magick
 * OpenSCAD
+* Image Magick
+* Potrace
 
 ## How to
 
