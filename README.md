@@ -1,3 +1,5 @@
+*If you just want the SVG ships, [look here](https://maximilianazendorf.github.io/eve-ships-svg/)*
+
 # EVE Ship SVG Generation Script
 
 This is a python script that generates black SVG silouhettes of EVE Online ships (or other models) based on the 3D models provided and extracted [here](https://github.com/Kyle-Cerniglia/EvE-3D-Printing).
