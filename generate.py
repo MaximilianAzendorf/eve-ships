@@ -35,7 +35,7 @@ OUT_DIR_X64 = OUT_DIR + "/x64"
 
 # The base orientation offset. By default (0, 0, 0), the sips will be rendered from their
 # right side (so they are facing to the right).
-BASE_ORIENTATION = 90, 0, 0
+BASE_ORIENTATION = 0, 0, 0
 
 # The script will render all STL files that match one of the regular expressions in the 
 # subdirs list EXCEPT those whose filenames also match the regular expressions in the 
