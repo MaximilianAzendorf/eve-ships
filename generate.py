@@ -24,6 +24,8 @@
 
 
 # The resolution at which the models will be rendered; not recommended to change that.
+# We have to render the sips in a really high resolution so that potrace generates
+# accurate and detailed SVGs.
 RESOLUTION = 5000
 
 # The output directory names
@@ -31,9 +33,13 @@ OUT_DIR = "output"
 OUT_DIR_FULL = OUT_DIR + "/full"
 OUT_DIR_X64 = OUT_DIR + "/x64"
 
+# The base orientation offset. By default (0, 0, 0), the sips will be rendered from their
+# right side (so they are facing to the right).
+BASE_ORIENTATION = 90, 0, 0
+
 # The script will render all STL files that match one of the regular expressions in the 
-# subdirs list EXCEPT the ones that also match the regular expressions in the blacklist 
-# list.
+# subdirs list EXCEPT those whose filenames also match the regular expressions in the 
+# blacklist list.
 subdirs = [
     "ships/amarr/.+", 
     "ships/ore/.+", 
@@ -66,6 +72,7 @@ blacklist = [
 
 from pathlib import Path
 from shutil import copyfile
+from operator import add
 import contextlib
 import subprocess
 import tempfile
@@ -99,11 +106,15 @@ def openscad(shipkey, res, dist, infile, outfile):
     file.close()
 
     orientation_str = orientation.get(shipkey)
+
     if orientation_str is None:
         if shipkey not in warned_about:
             print(f"  WARNING: No orientation given for the model '{shipkey}'. Consider adding it to orientation.json.")
             warned_about.add(shipkey)
         orientation_str = "90,-90,-90"
+
+    real_orientation = tuple(map(add, BASE_ORIENTATION, map(int, orientation_str.split(','))))
+    orientation_str = ','.join(str(o) for o in real_orientation)
 
     cmd = ["openscad", 
         f"--camera=0,0,0,{orientation_str},{dist}", 
@@ -171,7 +182,7 @@ def finddist(shipkey, infile):
             mind = dist
             if maxd == startmax:
                 mind = 0.0
-                maxd *= 5
+                maxd *= 4
                 startmax = maxd
 
     print("  (scale) using dist=" + str(maxd))
